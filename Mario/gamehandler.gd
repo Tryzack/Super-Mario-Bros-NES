@@ -8,3 +8,6 @@ func _ready():
 	pass 
 func _process(_delta):
 	pass
+
+func GameOver():
+	print("game over")

@@ -1,12 +1,18 @@
-[gd_scene load_steps=6 format=3 uid="uid://ncbbsrapxyw0"]
+[gd_scene load_steps=8 format=3 uid="uid://ncbbsrapxyw0"]
 
+[ext_resource type="Script" path="res://Levels/Level01.gd" id="1_0ht7o"]
 [ext_resource type="Texture2D" uid="uid://edio2b18yoeq" path="res://Assets/mario-1-1.png" id="1_rhm0y"]
 [ext_resource type="TileSet" uid="uid://c653embbjiko4" path="res://Resources/Mario_tile_set.tres" id="2_yydqs"]
 [ext_resource type="PackedScene" uid="uid://d27nx4y2oaemg" path="res://Characters/mario.tscn" id="3_os2tp"]
 [ext_resource type="PackedScene" uid="uid://chbtafrry7dwx" path="res://Scenes/cubo.tscn" id="4_3usbg"]
 [ext_resource type="PackedScene" uid="uid://c5tbpluvdvpnt" path="res://Scenes/bloque.tscn" id="5_ncr10"]
 
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_punl0"]
+a = Vector2(0, 1)
+b = Vector2(3408, 1)
+
 [node name="Level01" type="Node2D"]
+script = ExtResource("1_0ht7o")
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("2_yydqs")
@@ -32,9 +38,6 @@ layer_2/tile_data = PackedInt32Array(851968, 1, 0, 786433, 1, 0, 786434, 1, 0, 7
 visible = false
 position = Vector2(1692, 105)
 texture = ExtResource("1_rhm0y")
-
-[node name="Mario" parent="." instance=ExtResource("3_os2tp")]
-position = Vector2(47, 184)
 
 [node name="Cubos" type="Node2D" parent="."]
 
@@ -91,7 +94,6 @@ position = Vector2(328, 136)
 
 [node name="Bloque2" parent="Bricks" instance=ExtResource("5_ncr10")]
 position = Vector2(360, 136)
-item = 0
 cantidad = 5
 
 [node name="Bloque3" parent="Bricks" instance=ExtResource("5_ncr10")]
@@ -99,7 +101,6 @@ position = Vector2(392, 136)
 
 [node name="Bloque4" parent="Bricks" instance=ExtResource("5_ncr10")]
 position = Vector2(1512, 137)
-item = 0
 cantidad = 5
 
 [node name="Bloque5" parent="Bricks" instance=ExtResource("5_ncr10")]
@@ -176,3 +177,15 @@ position = Vector2(2712, 136)
 
 [node name="Bloque29" parent="Bricks" instance=ExtResource("5_ncr10")]
 position = Vector2(2744, 136)
+
+[node name="Mario" parent="." groups=["mario"] instance=ExtResource("3_os2tp")]
+position = Vector2(47, 184)
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(-16, 224)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("SegmentShape2D_punl0")
+
+[connection signal="muerte" from="Mario" to="." method="_on_mario_muerte"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

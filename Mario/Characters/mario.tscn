@@ -1,0 +1,140 @@
+[gd_scene load_steps=13 format=3 uid="uid://d27nx4y2oaemg"]
+
+[ext_resource type="Texture2D" uid="uid://cmdr47xxoj8pm" path="res://Assets/Sprites/mario_peq.png" id="1_p8p2m"]
+[ext_resource type="Script" path="res://Characters/mario.gd" id="1_qrvxw"]
+[ext_resource type="Texture2D" uid="uid://cfx04hgmp78pe" path="res://Assets/Sprites/mario_gra.png" id="3_s4vkr"]
+[ext_resource type="Texture2D" uid="uid://cugksv2gnkjrp" path="res://Assets/Sprites/mario_fueg.png" id="4_v12mp"]
+[ext_resource type="PackedScene" uid="uid://fbntp1qs3pba" path="res://Scenes/colisiones_mario_p.tscn" id="5_r07et"]
+[ext_resource type="PackedScene" uid="uid://djhq7opy130dc" path="res://Scenes/colisiones_mario_g.tscn" id="6_nog58"]
+
+[sub_resource type="Animation" id="Animation_wbwjm"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:frame_coords")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(5, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_e72bq"]
+resource_name = "caminando"
+length = 0.30001
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_f0wj1"]
+resource_name = "dile"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_pnmlp"]
+resource_name = "muerte"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(6, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_lvcl7"]
+resource_name = "salto"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(5, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qv2ah"]
+_data = {
+"RESET": SubResource("Animation_wbwjm"),
+"caminando": SubResource("Animation_e72bq"),
+"idle": SubResource("Animation_f0wj1"),
+"muerte": SubResource("Animation_pnmlp"),
+"salto": SubResource("Animation_lvcl7")
+}
+
+[node name="Mario" type="CharacterBody2D"]
+script = ExtResource("1_qrvxw")
+mario_p = ExtResource("1_p8p2m")
+mario_g = ExtResource("3_s4vkr")
+mario_f = ExtResource("4_v12mp")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_p8p2m")
+hframes = 7
+frame = 5
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0, -71)
+zoom = Vector2(2.9, 2.9)
+limit_left = 0
+limit_top = 0
+limit_bottom = 0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_qv2ah")
+}
+
+[node name="colision_p" parent="." instance=ExtResource("5_r07et")]
+
+[node name="colision_g" parent="." instance=ExtResource("6_nog58")]
+position = Vector2(0.25, 0)
+
+[connection signal="cuerpoEntro" from="colision_p" to="." method="_on_collision_shape_2d_cuerpo_entro"]
+[connection signal="cuerpoEntro" from="colision_g" to="." method="_on_collision_shape_2d_cuerpo_entro"]

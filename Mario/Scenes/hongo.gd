@@ -2,7 +2,7 @@ extends CharacterBody2D
 @export var tipo : int # 0 = rojo / 1 = verde
 @export var speed : float = 50 #asignar velocidad
 var gravity = Gamehandler.gravity #asignar gravedad
-var movement_enabled = false #permitir movimiento
+var enabled_movement : bool = false #permitir movimiento
 var direction = 1 #direccion por defecto
 var direction_change = false #cambiar de direccion
 
@@ -15,7 +15,7 @@ func _ready():
 			get_node("AnimationPlayer").play("spawn")
 			
 func _physics_process(delta):
-	if(movement_enabled == true): #si el hongo se puede mover
+	if(enabled_movement == true): #si el hongo se puede mover
 		if not is_on_floor(): #si esta en el aire aplicar gravedad
 			velocity.y += gravity * delta
 		if(tipo == 0 or tipo == 1):
@@ -33,4 +33,4 @@ func _physics_process(delta):
 func _on_animation_player_animation_finished(anim_name):
 	if(anim_name == "spawn"):
 		get_node("AnimationPlayer").play("flor_idle")
-	movement_enabled = true #activar movimiento despues de spawnear
+	enabled_movement = true #activar movimiento despues de spawnear

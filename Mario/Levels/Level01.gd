@@ -212,3 +212,12 @@ func update_ui():
 
 func _on_mario_parar_musica():
 	get_node("sonidos/musica").stop()
+
+func _on_time_stop_timeout():
+	mario.enabled_movement = true
+
+func _on_mario_cambiar_forma():
+	mario.enabled_movement = false
+	for i in get_node("objetos/Enemigos").get_children():
+		i.enabled_movement = false
+	$time_stop.start()

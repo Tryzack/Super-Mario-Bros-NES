@@ -1,0 +1,118 @@
+[gd_scene load_steps=11 format=3 uid="uid://c0wb2yt4edx37"]
+
+[ext_resource type="Script" path="res://Scenes/bloque.gd" id="1_jqx5b"]
+[ext_resource type="Texture2D" uid="uid://dlnxm785jlefd" path="res://Assets/Sprites/brick_underground.png" id="2_7g2yj"]
+[ext_resource type="AudioStream" uid="uid://lb2pwk0b3xt2" path="res://Musica/smb_coin.wav" id="3_j477q"]
+[ext_resource type="AudioStream" uid="uid://cabfxp76nwi4v" path="res://Musica/smb_breakblock.wav" id="4_86ahc"]
+[ext_resource type="AudioStream" uid="uid://bepcijs7q8e38" path="res://Musica/smb_bump.wav" id="5_ul2v3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0leov"]
+size = Vector2(16, 16)
+
+[sub_resource type="Animation" id="Animation_7yy2w"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_icm57"]
+resource_name = "levantar"
+length = 0.1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -5), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_yuht6"]
+resource_name = "abierto"
+length = 1.5
+step = 0.025
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"update": 1,
+"values": []
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mrq2d"]
+_data = {
+"RESET": SubResource("Animation_7yy2w"),
+"levantar": SubResource("Animation_icm57"),
+"roto": SubResource("Animation_yuht6")
+}
+
+[node name="Bloque" type="StaticBody2D" groups=["brick"]]
+collision_layer = 32
+collision_mask = 86
+script = ExtResource("1_jqx5b")
+tipo_bloque = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_0leov")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_7g2yj")
+hframes = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_mrq2d")
+}
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+
+[node name="Timer2" type="Timer" parent="."]
+wait_time = 0.05
+one_shot = true
+
+[node name="sonidos" type="Node2D" parent="."]
+
+[node name="moneda" type="AudioStreamPlayer2D" parent="sonidos"]
+stream = ExtResource("3_j477q")
+
+[node name="romper" type="AudioStreamPlayer2D" parent="sonidos"]
+stream = ExtResource("4_86ahc")
+
+[node name="chocar" type="AudioStreamPlayer2D" parent="sonidos"]
+stream = ExtResource("5_ul2v3")
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout" flags=18]
+[connection signal="timeout" from="Timer2" to="." method="_on_timer_2_timeout" flags=18]

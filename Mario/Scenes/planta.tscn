@@ -7,20 +7,31 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n3bfu"]
 size = Vector2(16, 24)
 
-[sub_resource type="Animation" id="Animation_wmj50"]
-resource_name = "idle"
-loop_mode = 1
+[sub_resource type="Animation" id="Animation_wpw7d"]
+resource_name = "Entrar al tubo"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/path = NodePath("Sprite2D:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
+"times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [0, 1]
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 32)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionShape2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1.27456),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 32)]
 }
 
 [sub_resource type="Animation" id="Animation_mli8u"]
@@ -89,31 +100,20 @@ tracks/1/keys = {
 "values": [Vector2(0, 32), Vector2(0, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_wpw7d"]
-resource_name = "Entrar al tubo"
+[sub_resource type="Animation" id="Animation_wmj50"]
+resource_name = "idle"
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
+"times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(0, 32)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CollisionShape2D:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1.27456),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(0, 32)]
+"update": 1,
+"values": [0, 1]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_n6rsm"]
@@ -122,6 +122,21 @@ _data = {
 "RESET": SubResource("Animation_mli8u"),
 "Salir del tubo": SubResource("Animation_afo0a"),
 "idle": SubResource("Animation_wmj50")
+}
+
+[sub_resource type="Animation" id="Animation_dapcj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
 }
 
 [sub_resource type="Animation" id="Animation_nn7wl"]
@@ -138,21 +153,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [0, 1]
-}
-
-[sub_resource type="Animation" id="Animation_dapcj"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_mx2jl"]

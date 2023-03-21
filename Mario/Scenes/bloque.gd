@@ -2,11 +2,15 @@ extends StaticBody2D
 var abierto : bool = false #estado del bloque
 @export var item : int = 0 #0 = moneda
 @export var cantidad : int #cantidad de objetos que tendra (default = 0)
+@export var tipo_bloque: int #0 = bloque normal / 1 = bloque underground
 var scene = load("res://Scenes/moneda_bonus.tscn") #instancia moneda
-var bloque_exp = load ("res://Scenes/bloque_explota.tscn") #instancia animacion bloque
+var bloque_exp	#instancia animacion bloque
 
 func _ready():
-	pass
+	if(tipo_bloque == 0):
+		bloque_exp = load ("res://Scenes/bloque_explota.tscn")
+	else:
+		bloque_exp = load ("res://Scenes/bloque_explota_underground.tscn")
 
 func romper_cubo(): #activar y romper el cubo si no tiene items
 	if (!abierto): #si el cubo no esta abierto

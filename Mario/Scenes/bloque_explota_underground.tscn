@@ -1,0 +1,41 @@
+[gd_scene load_steps=2 format=3 uid="uid://jg4dlwxaso4h"]
+
+[ext_resource type="Texture2D" uid="uid://dlnxm785jlefd" path="res://Assets/Sprites/brick_underground.png" id="1_6irw7"]
+
+[node name="bloque_explota" type="Node2D"]
+
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+linear_velocity = Vector2(-50, -250)
+
+[node name="Sprite2D" type="Sprite2D" parent="RigidBody2D"]
+texture = ExtResource("1_6irw7")
+hframes = 2
+frame = 1
+
+[node name="RigidBody2D2" type="RigidBody2D" parent="."]
+linear_velocity = Vector2(50, -250)
+
+[node name="Sprite2D2" type="Sprite2D" parent="RigidBody2D2"]
+texture = ExtResource("1_6irw7")
+flip_h = true
+hframes = 2
+frame = 1
+
+[node name="RigidBody2D3" type="RigidBody2D" parent="."]
+linear_velocity = Vector2(30, -200)
+
+[node name="Sprite2D3" type="Sprite2D" parent="RigidBody2D3"]
+texture = ExtResource("1_6irw7")
+flip_h = true
+flip_v = true
+hframes = 2
+frame = 1
+
+[node name="RigidBody2D4" type="RigidBody2D" parent="."]
+linear_velocity = Vector2(-30, -200)
+
+[node name="Sprite2D4" type="Sprite2D" parent="RigidBody2D4"]
+texture = ExtResource("1_6irw7")
+flip_v = true
+hframes = 2
+frame = 1

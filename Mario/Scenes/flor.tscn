@@ -1,0 +1,95 @@
+[gd_scene load_steps=8 format=3 uid="uid://bwidkddbqo5a4"]
+
+[ext_resource type="Script" path="res://Scenes/hongo.gd" id="1_oulsa"]
+[ext_resource type="Texture2D" uid="uid://cf71m34yk1ptj" path="res://Assets/Sprites/flor.png" id="2_wgenp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iw8um"]
+size = Vector2(16, 16)
+
+[sub_resource type="Animation" id="Animation_jt50i"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_up0op"]
+resource_name = "flor_idle"
+loop_mode = 1
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_7gk6u"]
+resource_name = "spawn"
+length = 0.25
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -16)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_eumn7"]
+_data = {
+"RESET": SubResource("Animation_jt50i"),
+"flor_idle": SubResource("Animation_up0op"),
+"spawn": SubResource("Animation_7gk6u")
+}
+
+[node name="flor" type="CharacterBody2D" groups=["flor"]]
+collision_layer = 64
+collision_mask = 33
+script = ExtResource("1_oulsa")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -16)
+shape = SubResource("RectangleShape2D_iw8um")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_wgenp")
+hframes = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." groups=["flor"]]
+libraries = {
+"": SubResource("AnimationLibrary_eumn7")
+}
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

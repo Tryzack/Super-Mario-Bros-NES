@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://cvmbqhprk1d4p"]
+
+[ext_resource type="Script" path="res://Scenes/moving_platform.gd" id="1_4apfn"]
+[ext_resource type="Texture2D" uid="uid://cv7g675u18kjb" path="res://Assets/Sprites/moving_platform-modified.png" id="1_vdjog"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kwtkj"]
+size = Vector2(48, 8)
+
+[node name="moving_platform" type="CharacterBody2D" groups=["platform"]]
+position = Vector2(2263, 458)
+collision_layer = 33
+collision_mask = 0
+script = ExtResource("1_4apfn")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_vdjog")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -4)
+shape = SubResource("RectangleShape2D_kwtkj")

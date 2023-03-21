@@ -52,6 +52,16 @@ tecla_m={
 ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="Tiles"
+2d_physics/layer_2="Player"
+2d_physics/layer_3="Enemies"
+2d_physics/layer_4="Coins"
+2d_physics/layer_5="Proyectiles"
+2d_physics/layer_6="special_blocks"
+2d_physics/layer_7="powerups"
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0

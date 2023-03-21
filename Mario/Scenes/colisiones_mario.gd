@@ -21,9 +21,13 @@ func devolverBody():
 func desactivar_colisiones(): #desactivar colisiones existentes
 	get_node("RayCastCabeza").enabled = false
 	get_node("RayCastPisar").enabled = false
+	get_node("RayCastPisar2").enabled = false
+	get_node("RayCastPisar3").enabled = false
 	get_node("Area2D/CollisionShape2D").set_deferred("disabled", true)
 
 func activar_colisiones(): #activar colisiones existentes
 	get_node("RayCastCabeza").enabled = true
 	get_node("RayCastPisar").enabled = true
+	get_node("RayCastPisar2").enabled = true
+	get_node("RayCastPisar3").enabled = true
 	get_node("Area2D/CollisionShape2D").set_deferred("disabled", false)

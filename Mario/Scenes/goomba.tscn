@@ -1,0 +1,115 @@
+[gd_scene load_steps=11 format=3 uid="uid://dpqluivl2wdub"]
+
+[ext_resource type="Script" path="res://goomba.gd" id="1_wv1e5"]
+[ext_resource type="Texture2D" uid="uid://cawgw63a1d2ih" path="res://Assets/Sprites/goomba.png" id="2_a0s3r"]
+[ext_resource type="AudioStream" uid="uid://ccsrbvxukakd7" path="res://Musica/smb_stomp.wav" id="3_a1f2f"]
+
+[sub_resource type="Animation" id="Animation_1q5gj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_ktun0"]
+resource_name = "caminando"
+length = 0.8
+loop_mode = 1
+step = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_8r5kb"]
+resource_name = "muerte"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qf24e"]
+_data = {
+"RESET": SubResource("Animation_1q5gj"),
+"caminando": SubResource("Animation_ktun0"),
+"muerte": SubResource("Animation_8r5kb")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ie7hb"]
+size = Vector2(16, 15)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tk3hh"]
+size = Vector2(583.531, 266)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ye6dw"]
+font_size = 10
+
+[node name="goomba" type="CharacterBody2D" groups=["enemigos"]]
+collision_layer = 4
+collision_mask = 33
+slide_on_ceiling = false
+script = ExtResource("1_wv1e5")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_a0s3r")
+hframes = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_qf24e")
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_ie7hb")
+
+[node name="Area2D" type="Area2D" parent="." groups=["enemigos"]]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+visible = false
+position = Vector2(1, 0)
+shape = SubResource("RectangleShape2D_tk3hh")
+
+[node name="Label" type="Label" parent="."]
+visible = false
+offset_left = -19.0
+offset_top = -25.0
+offset_right = 21.0
+offset_bottom = 1.0
+text = "250"
+label_settings = SubResource("LabelSettings_ye6dw")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="enemigo muerto" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_a1f2f")
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

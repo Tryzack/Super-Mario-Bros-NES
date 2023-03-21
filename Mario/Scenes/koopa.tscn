@@ -1,0 +1,275 @@
+[gd_scene load_steps=16 format=3 uid="uid://coh5fdi8qyeco"]
+
+[ext_resource type="Script" path="res://Scenes/koopa.gd" id="1_f8vjf"]
+[ext_resource type="AudioStream" uid="uid://ccsrbvxukakd7" path="res://Musica/smb_stomp.wav" id="2_m4pgn"]
+[ext_resource type="Texture2D" uid="uid://dj5edgde44d0j" path="res://Assets/Sprites/tortuga.png" id="2_rjf4f"]
+[ext_resource type="AudioStream" uid="uid://ccaxg753c64lf" path="res://Musica/smb_kick.wav" id="3_k7t8a"]
+
+[sub_resource type="Animation" id="Animation_cpepo"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.642281]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 3.8147e-06)]
+}
+
+[sub_resource type="Animation" id="Animation_ehpyq"]
+resource_name = "caminando"
+length = 0.8
+loop_mode = 1
+step = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_4yd7g"]
+resource_name = "convertir en tortuga"
+length = 0.1
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+
+[sub_resource type="Animation" id="Animation_ute6f"]
+resource_name = "muerte"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 1.14319, 3.21315]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.4, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 3.8147e-06), Vector2(0, -50), Vector2(-1.90735e-06, 76)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_30j4k"]
+_data = {
+"RESET": SubResource("Animation_cpepo"),
+"caminando": SubResource("Animation_ehpyq"),
+"convertir en tortuga": SubResource("Animation_4yd7g"),
+"muerte": SubResource("Animation_ute6f")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iw6i2"]
+size = Vector2(20, 22)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t6rcw"]
+size = Vector2(14, 12)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_867ud"]
+size = Vector2(4, 6)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o3uqm"]
+size = Vector2(18, 6)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6wfdd"]
+size = Vector2(583.531, 266)
+
+[sub_resource type="LabelSettings" id="LabelSettings_53sqy"]
+font_size = 10
+
+[node name="koopa" type="CharacterBody2D" groups=["enemigos", "koopa"]]
+collision_layer = 4
+collision_mask = 33
+script = ExtResource("1_f8vjf")
+
+[node name="sonidos" type="Node2D" parent="."]
+
+[node name="enemigo muerto" type="AudioStreamPlayer2D" parent="sonidos"]
+stream = ExtResource("2_m4pgn")
+
+[node name="patear" type="AudioStreamPlayer" parent="sonidos"]
+stream = ExtResource("3_k7t8a")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 3.8147e-06)
+rotation = 0.642281
+texture = ExtResource("2_rjf4f")
+hframes = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_30j4k")
+}
+
+[node name="ColisionVivo" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_iw6i2")
+
+[node name="ColisionMuerto" type="CollisionShape2D" parent="."]
+position = Vector2(0, 5)
+shape = SubResource("RectangleShape2D_t6rcw")
+disabled = true
+
+[node name="golpe_izquierda" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 39
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="golpe_izquierda"]
+position = Vector2(-12, 8)
+shape = SubResource("RectangleShape2D_867ud")
+disabled = true
+
+[node name="golpe_derecha" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 39
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="golpe_derecha"]
+position = Vector2(12, 8)
+shape = SubResource("RectangleShape2D_867ud")
+disabled = true
+
+[node name="golpe_medio" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 39
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="golpe_medio"]
+position = Vector2(0, 8)
+shape = SubResource("RectangleShape2D_o3uqm")
+
+[node name="Area2D" type="Area2D" parent="." groups=["enemigos"]]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+visible = false
+position = Vector2(1, 0)
+shape = SubResource("RectangleShape2D_6wfdd")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2(-11, 0)
+target_position = Vector2(0, 15)
+
+[node name="RayCast2D2" type="RayCast2D" parent="."]
+position = Vector2(11, 0)
+target_position = Vector2(0, 15)
+
+[node name="Label" type="Label" parent="."]
+visible = false
+offset_left = -19.0
+offset_top = -26.0
+offset_right = 21.0
+text = "250"
+label_settings = SubResource("LabelSettings_53sqy")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="."]
+visible = false
+offset_left = -19.0
+offset_top = -26.0
+offset_right = 21.0
+text = "500"
+label_settings = SubResource("LabelSettings_53sqy")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="body_entered" from="golpe_izquierda" to="." method="_on_golpe_izquierda_body_entered"]
+[connection signal="body_entered" from="golpe_derecha" to="." method="_on_golpe_derecha_body_entered"]
+[connection signal="body_entered" from="golpe_medio" to="." method="_on_golpe_medio_body_entered"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

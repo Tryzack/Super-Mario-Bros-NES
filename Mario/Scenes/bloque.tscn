@@ -1,7 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://c5tbpluvdvpnt"]
+[gd_scene load_steps=11 format=3 uid="uid://c5tbpluvdvpnt"]
 
 [ext_resource type="Script" path="res://Scenes/bloque.gd" id="1_o7fu6"]
 [ext_resource type="Texture2D" uid="uid://cbchgn6kc6abb" path="res://Assets/Sprites/brick.png" id="1_p3qpb"]
+[ext_resource type="AudioStream" uid="uid://lb2pwk0b3xt2" path="res://Musica/smb_coin.wav" id="3_w8bnb"]
+[ext_resource type="AudioStream" uid="uid://cabfxp76nwi4v" path="res://Musica/smb_breakblock.wav" id="4_n2mnt"]
+[ext_resource type="AudioStream" uid="uid://bepcijs7q8e38" path="res://Musica/smb_bump.wav" id="5_8vdx7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0leov"]
 size = Vector2(16, 16)
@@ -52,7 +55,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_yuht6"]
 resource_name = "abierto"
-length = 0.25
+length = 1.5
 step = 0.025
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -61,22 +64,10 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
 "update": 1,
-"values": [1]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(0, -5), Vector2(0, -20), Vector2(0, 5), Vector2(0, 15), Vector2(0, 25)]
+"values": []
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_mrq2d"]
@@ -87,6 +78,8 @@ _data = {
 }
 
 [node name="Bloque" type="StaticBody2D" groups=["brick"]]
+collision_layer = 32
+collision_mask = 86
 script = ExtResource("1_o7fu6")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -101,4 +94,24 @@ libraries = {
 "": SubResource("AnimationLibrary_mrq2d")
 }
 
-[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[node name="Timer" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+
+[node name="Timer2" type="Timer" parent="."]
+wait_time = 0.05
+one_shot = true
+
+[node name="sonidos" type="Node2D" parent="."]
+
+[node name="moneda" type="AudioStreamPlayer2D" parent="sonidos"]
+stream = ExtResource("3_w8bnb")
+
+[node name="romper" type="AudioStreamPlayer2D" parent="sonidos"]
+stream = ExtResource("4_n2mnt")
+
+[node name="chocar" type="AudioStreamPlayer2D" parent="sonidos"]
+stream = ExtResource("5_8vdx7")
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="Timer2" to="." method="_on_timer_2_timeout"]

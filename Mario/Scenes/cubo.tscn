@@ -1,7 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://chbtafrry7dwx"]
+[gd_scene load_steps=12 format=3 uid="uid://chbtafrry7dwx"]
 
 [ext_resource type="Script" path="res://Scenes/cubo.gd" id="1_26x0e"]
 [ext_resource type="Texture2D" uid="uid://8yim3ay117sj" path="res://Assets/Sprites/cubos.png" id="1_ludfo"]
+[ext_resource type="AudioStream" uid="uid://lb2pwk0b3xt2" path="res://Musica/smb_coin.wav" id="3_8t7c0"]
+[ext_resource type="AudioStream" uid="uid://bxjgvtjke1arj" path="res://Musica/smb_powerup_appears.wav" id="4_388ad"]
+[ext_resource type="AudioStream" uid="uid://bepcijs7q8e38" path="res://Musica/smb_bump.wav" id="5_425xj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6t6qn"]
 size = Vector2(16, 16)
@@ -93,6 +96,8 @@ _data = {
 
 [node name="Cubo" type="StaticBody2D" groups=["cubo"]]
 position = Vector2(337, 114)
+collision_layer = 32
+collision_mask = 84
 script = ExtResource("1_26x0e")
 cantidad = 1
 
@@ -107,5 +112,16 @@ hframes = 5
 libraries = {
 "": SubResource("AnimationLibrary_mrq2d")
 }
+
+[node name="sonidos" type="Node2D" parent="."]
+
+[node name="moneda" type="AudioStreamPlayer2D" parent="sonidos"]
+stream = ExtResource("3_8t7c0")
+
+[node name="item" type="AudioStreamPlayer2D" parent="sonidos"]
+stream = ExtResource("4_388ad")
+
+[node name="chocar" type="AudioStreamPlayer2D" parent="sonidos"]
+stream = ExtResource("5_425xj")
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

@@ -3,7 +3,7 @@ class_name koopa
 
 @export var speed : float = 50 #asignar velocidad
 var gravity = Gamehandler.gravity #asignar gravedad
-var enabled_movement = true #permitir movimiento
+var enabled_movement = false #permitir movimiento
 var direction = -1 #direccion por defecto
 var direction_change = false #cambiar de direccion
 var vivo : bool = true
@@ -113,7 +113,7 @@ func _on_golpe_medio_body_entered(body):
 
 func _on_area_2d_body_entered(body):
 	if(body.is_in_group("mario")):
-		pass#enabled_movement = true
+		enabled_movement = true
 
 
 func _on_timer_timeout():

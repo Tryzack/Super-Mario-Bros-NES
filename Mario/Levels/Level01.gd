@@ -42,7 +42,7 @@ func reinicio():
 	if Gamehandler.vidas >= 0:
 		get_tree().reload_current_scene()
 	else:
-		get_tree().change_scene_to_file("res://Scenes/game_over.tscn")
+		get_tree().change_scene_to_file("res://menu.tscn")
 func _on_win():
 	mario.warp_to(3192, 184)
 

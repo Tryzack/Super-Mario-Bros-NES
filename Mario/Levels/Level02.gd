@@ -4,7 +4,7 @@ signal muerte
 var proyectil_cooldown : bool = true
 var proyectil_fuego = load("res://Scenes/fuego_proyectil.tscn")
 @onready var mario = get_node("Mario")
-var is_in_cave: bool = false
+var world_state : int = 0 # 0 = arriba / 1 = underground / 2 = pipe underground / 3 = arriba_final
 var id_tubo : int
 var tipo_tubo : int
 var mario_en_tubo : bool = false
@@ -12,7 +12,6 @@ var x
 var mario_is_on_tp : bool = false
 
 func _ready():
-	get_node("sonidos/musica").play()
 	Gamehandler.current_level = self
 	update_ui()
 	adjust_camera()
@@ -27,7 +26,7 @@ func _process(_delta):
 		instance.global_position = posicion + posicion_mario
 		instance.direction = mario.last_direction
 		add_child(instance)
-		get_node("cd_proyectil").start()
+		get_node("timers/cd_proyectil").start()
 		proyectil_cooldown = false
 		
 	if(mario_en_tubo and (mario.is_pressing_s or mario.is_pressing_w or mario.is_pressing_a or mario.is_pressing_d)):
@@ -41,14 +40,16 @@ func _on_mario_muerte():
 func reinicio():
 	if Gamehandler.vidas >= 0:
 		get_tree().reload_current_scene()
-	else:
-		get_tree().change_scene_to_file("res://Scenes/game_over.tscn")
+
 func _on_win():
 	mario.warp_to(3192, 184)
 
-func _on_area_2d_body_entered(body):
+func _on_kill_area_body_entered(body):
 	if(body.is_in_group("mario")):
 		mario.muerte_mario()
+	elif(body.is_in_group("platform")):
+		var pos = 262
+		body.warp_to(pos)
 	else:
 		body.queue_free()
 
@@ -82,48 +83,92 @@ func fix_mario_position():
 		match(id_tubo):
 			1:
 				if(mario.forma == 0):
-					x = get_node("Tubo").current_spawn_org_p
+					x = get_node("objetos/tubos/Tubo").current_spawn_org_p
 				else:
-					x = get_node("Tubo").current_spawn_org_g
+					x = get_node("objetos/tubos/Tubo").current_spawn_org_g
 			2:
 				x = mario.global.position
 			3:
 				if(mario.forma == 0):
-					x = get_node("Tubo3").current_spawn_org_p
+					x = get_node("objetos/tubos/Tubo3").current_spawn_org_p
 				else:
-					x = get_node("Tubo3").current_spawn_org_g
+					x = get_node("objetos/tubos/Tubo3").current_spawn_org_g
 			4:
+				x = mario.global.position
+			5:
 				if(mario.forma == 0):
-					x = get_node("Tubo4").current_spawn_org_p
+					x = get_node("objetos/tubos/Tubo5").current_spawn_org_p
 				else:
-					x = get_node("Tubo4").current_spawn_org_g
+					x = get_node("objetos/tubos/Tubo5").current_spawn_org_g
+			6:
+				if(mario.forma == 0):
+					x = get_node("objetos/tubos/Tubo6").current_spawn_org_p
+				else:
+					x = get_node("objetos/tubos/Tubo6").current_spawn_org_g
+			7:
+				if(mario.forma == 0):
+					x = get_node("objetos/tubos/Tubo7").current_spawn_org_p
+				else:
+					x = get_node("objetos/tubos/Tubo7").current_spawn_org_g
+			8:
+				if(mario.forma == 0):
+					x = get_node("objetos/tubos/Tubo8").current_spawn_org_p
+				else:
+					x = get_node("objetos/tubos/Tubo8").current_spawn_org_g
 		mario.warp_to(x)
 
 func warp_mario():
 	match(id_tubo):
 		1:
 			if(mario.forma == 0):
-				x = get_node("Tubo2").current_spawn_org_p
+				x = get_node("objetos/tubos/Tubo2").current_spawn_org_p
 			else:
-				x = get_node("Tubo2").current_spawn_org_g
+				x = get_node("objetos/tubos/Tubo2").current_spawn_org_g
 			tipo_tubo = 1
-			is_in_cave = true
+			world_state = 1
+			change_music()
 		2:
 			pass
 		3:
 			if(mario.forma == 0):
-				x = get_node("Tubo4").current_spawn_org_p
+				x = get_node("objetos/tubos/Tubo4").current_spawn_org_p
 			else:
-				x = get_node("Tubo4").current_spawn_org_g
-			tipo_tubo = 0
-			is_in_cave = false
+				x = get_node("objetos/tubos/Tubo4").current_spawn_org_g
+			tipo_tubo = 1
+			world_state = 2
 		4:
+			pass
+		5:
 			if(mario.forma == 0):
-				x = get_node("Tubo3").current_spawn_org_p
+				x = get_node("objetos/tubos/Tubo6").current_spawn_org_p
 			else:
-				x = get_node("Tubo3").current_spawn_org_g
+				x = get_node("objetos/tubos/Tubo6").current_spawn_org_g
+			tipo_tubo = 0
+			world_state = 1
+		6:
+			if(mario.forma == 0):
+				x = get_node("objetos/tubos/Tubo5").current_spawn_org_p
+			else:
+				x = get_node("objetos/tubos/Tubo5").current_spawn_org_g
 			tipo_tubo = 3
-			is_in_cave = true
+			world_state = 2
+		7:
+			if(mario.forma == 0):
+				x = get_node("objetos/tubos/Tubo8").current_spawn_org_p
+			else:
+				x = get_node("objetos/tubos/Tubo8").current_spawn_org_g
+			tipo_tubo = 0
+			world_state = 3
+			change_music()
+		8:
+			if(mario.forma == 0):
+				x = get_node("objetos/tubos/Tubo7").current_spawn_org_p
+			else:
+				x = get_node("objetos/tubos/Tubo7").current_spawn_org_g
+			tipo_tubo = 3
+			world_state = 1
+			change_music()
+
 	mario.warp_to(x)
 	salir_tubo()
 	adjust_camera()
@@ -170,39 +215,50 @@ func _on_mario_warped():
 func _on_win_area_flag_touched():
 	mario.enabled_movement = false
 	get_node("Mario/AnimationPlayer").play("win")
-	get_node("flag_touched").start()
+	get_node("timers/flag_touched").start()
 	get_node("sonidos/flagpole").play()
-	get_node("sonidos/musica").stop()
+	get_node("sonidos/musica_underground").stop()
+	get_node("sonidos/musica_upperground").stop()
 
 func _on_bottom_touched_timeout():
 	get_node("sonidos/win").play()
-	var pos1 = get_node("win_area").global_position
+	var pos1 = get_node("objetos/win_area").global_position
 	var pos2 = pos1 + Vector2(16, 156)
 	mario.use_sound = false
 	mario.warp_to(pos2)
 	get_node("Mario/AnimationPlayer").play("gotocastle")
-	get_node("next_level").start()
+	get_node("timers/next_level").start()
 
 func _on_flag_touched_timeout():
 	mario.win = true
 	mario.velocity.x = 0
 	mario.velocity.y = 50
-	get_node("bottom_touched").start()
+	get_node("timers/bottom_touched").start()
 
 func _on_next_level_timeout():
-	get_tree().change_scene_to_file("res://Levels/Level02.tscn")
+	get_tree().change_scene_to_file("res://Levels/Level01.tscn")
 
 func adjust_camera():
-	if(not is_in_cave):
+	if(world_state == 0):
+		get_node("Mario/Camera2D").limit_left = -96
+		get_node("Mario/Camera2D").limit_top = 17
+		get_node("Mario/Camera2D").limit_right = 304
+		get_node("Mario/Camera2D").limit_bottom = 240
+	if(world_state == 1):
 		get_node("Mario/Camera2D").limit_left = 0
-		get_node("Mario/Camera2D").limit_top = 1
-		get_node("Mario/Camera2D").limit_right = 3392
-		get_node("Mario/Camera2D").limit_bottom = 224
-	if(is_in_cave):
-		get_node("Mario/Camera2D").limit_left = 3481
-		get_node("Mario/Camera2D").limit_top = 1
-		get_node("Mario/Camera2D").limit_right = 3867
-		get_node("Mario/Camera2D").limit_bottom = 224
+		get_node("Mario/Camera2D").limit_top = 272
+		get_node("Mario/Camera2D").limit_right = 3072
+		get_node("Mario/Camera2D").limit_bottom = 480
+	if(world_state == 2):
+		get_node("Mario/Camera2D").limit_left = 1536
+		get_node("Mario/Camera2D").limit_top = 512
+		get_node("Mario/Camera2D").limit_right = 1792
+		get_node("Mario/Camera2D").limit_bottom = 720
+	if(world_state == 3):
+		get_node("Mario/Camera2D").limit_left = 2528
+		get_node("Mario/Camera2D").limit_top = 17
+		get_node("Mario/Camera2D").limit_right = 3072
+		get_node("Mario/Camera2D").limit_bottom = 240
 
 func update_ui():
 	get_node("UI/puntuacion/Label2").text = str(Gamehandler.puntuacion)
@@ -211,4 +267,18 @@ func update_ui():
 
 
 func _on_mario_parar_musica():
-	get_node("sonidos/musica").stop()
+	get_node("sonidos/musica_upperground").stop()
+	get_node("sonidos/musica_underground").stop()
+
+func change_music():
+	if(get_node("sonidos/musica_upperground").is_playing()):
+		get_node("sonidos/musica_upperground").stop()
+		get_node("sonidos/musica_underground").play()
+	else:
+		get_node("sonidos/musica_underground").stop()
+		get_node("sonidos/musica_upperground").play()
+
+
+func _on_tp_area_body_entered(body):
+	if(body.is_in_group("platform")):
+		body.warp_to(470)
